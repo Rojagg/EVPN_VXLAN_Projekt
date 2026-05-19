@@ -1,0 +1,38 @@
+name: EVPN_test
+
+topology:
+  nodes:
+
+    leaf1:
+      kind: linux
+      image: frrouting/frr:latest
+    
+      exec:
+        - ip addr add 1.1.1.1/32 dev lo
+        - ip addr add 10.0.12.1/30 dev eth1
+
+    leaf2:
+      kind: linux
+      image: frrouting/frr:latest
+
+
+      exec:
+        - ip addr add 2.2.2.2/32 dev lo
+        - ip addr add 10.0.12.2/30 dev eth1
+
+    host1:
+      kind: linux
+      image: alpine:latest
+
+
+    host2:
+      kind: linux
+      image: alpine:latest
+
+
+  links:
+    - endpoints: ["leaf1:eth1", "leaf2:eth1"]
+    - endpoints: ["leaf1:eth2", "host1:eth1"]
+    - endpoints: ["leaf2:eth2", "host2:eth1"]
+    - endpoints: ["leaf1:eth67", "leaf2:eth67"]
+
