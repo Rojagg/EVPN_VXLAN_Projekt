@@ -1,6 +1,6 @@
 #!/bin/bash
 ip addr replace 100.64.0.2 dev lo
-
+ip addr add 192.168.2.1/30 dev eth1
 
 
 ip link add br0 type bridge vlan_filtering 1 vlan_default_pvid 0

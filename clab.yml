@@ -8,7 +8,7 @@ topology:
       image: frrouting/frr:latest
     
       binds:
-        - leaf1/config1_2.sh:/config.sh
+        - leaf1/config.sh:/config.sh
 
       exec:
         - chmod +x /config.sh
@@ -19,13 +19,21 @@ topology:
       image: frrouting/frr:latest
 
       binds:
-        - leaf2/config1_2.sh:/config.sh
+        - leaf2/config.sh:/config.sh
 
       exec:
         - chmod +x /config.sh
         - /config.sh
 
+    spine1:
+      kind: linux
+      image: frrouting/frr:latest
 
+      binds:
+        - spine1/config.sh:/config.sh
+      exec:
+        - chmod +x /config.sh
+        - /config.sh
     host1:
       kind: linux
       image: alpine:latest
@@ -39,7 +47,8 @@ topology:
         #exec:
 
   links:
-    - endpoints: ["leaf1:eth1", "leaf2:eth1"]
+    - endpoints: ["spine1:eth1", "leaf1:eth1"]
+    - endpoints: ["spine1:eth2", "leaf2:eth1"]
     - endpoints: ["leaf1:eth2", "host1:eth1"]
     - endpoints: ["leaf2:eth2", "host2:eth1"]
 

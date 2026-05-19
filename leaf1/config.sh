@@ -2,7 +2,7 @@
 #Set the IP address for the interface - more production-friendly - implicit /3
 #idempotent - checking whether the interface is already configured
 ip addr replace 100.64.0.1 dev lo
-
+ip addr add 192.168.1.1/30 dev eth1
 
 #Create the bridge named br0 that will be vlan aware - this allows us to distinguish the membership using vlan
 # and disabling native vlan - so vlan 1 is no longer assigned by default
